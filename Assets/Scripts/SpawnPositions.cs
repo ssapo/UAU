@@ -7,6 +7,7 @@ public class SpawnPositions : MonoBehaviour
     [SerializeField] private List<Transform> positions;
 
     private int index;
+    public int Index { get; }
 
     public Vector3 GetSpawnPosition()
     {

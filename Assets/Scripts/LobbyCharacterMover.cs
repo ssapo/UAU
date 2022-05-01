@@ -20,7 +20,7 @@ public class LobbyCharacterMover : CharacterMover
     {
         if(hasAuthority)
         {
-            isMoveable = true;
+            IsMoveable = true;
         }
     }
 }

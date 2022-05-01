@@ -28,8 +28,8 @@ public class AmongUsRoomPlayer : NetworkRoomPlayer
 
     public void SetPlayerColor_Hook(EPlayerColor oldColor, EPlayerColor newColor)
     {
-        LobbyUIManager.Instance.CustomizeUI.UpdateColorButton();
-    }
+		LobbyUIManager.Instance?.CustomizeUI.UpdateSelectColorButton(newColor);
+	}
 
     public CharacterMover lobbyPlayerCharacter;
 
@@ -43,7 +43,12 @@ public class AmongUsRoomPlayer : NetworkRoomPlayer
         }
     }
 
-    [Command]
+	private void OnDestroy()
+	{
+		LobbyUIManager.Instance?.CustomizeUI.UpdateUnselectColorButton(playerColor);
+	}
+
+	[Command]
     public void CmdSetPlayerColor(EPlayerColor color)
     {
         playerColor = color;
@@ -55,9 +60,12 @@ public class AmongUsRoomPlayer : NetworkRoomPlayer
     {
         playerColor = GetAvailablePlayerColor();
 
-        Vector3 spawnPos = FindObjectOfType<SpawnPositions>().GetSpawnPosition();
+        var spawnPositions = FindObjectOfType<SpawnPositions>();
+        int index = spawnPositions.Index;
+        Vector3 spawnPos = spawnPositions.GetSpawnPosition();
 
         var playerCharacter = Instantiate(AmongUsRoomManager.singleton.spawnPrefabs[0], spawnPos, Quaternion.identity).GetComponent<LobbyCharacterMover>();
+        playerCharacter.transform.localScale = index < 5 ? new Vector3(0.5f, 0.5f, 1f) : new Vector3(-0.5f, 0.5f, 1f);
         NetworkServer.Spawn(playerCharacter.gameObject, connectionToClient);
         playerCharacter.ownerNetId = netId;
         playerCharacter.playerColor = playerColor;
