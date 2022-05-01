@@ -5,13 +5,11 @@ using Mirror;
 
 public class AmongUsRoomManager : NetworkRoomManager
 {
+    public int minPlayerCount;
+    public int imposterCount;
+
     public override void OnRoomServerConnect(NetworkConnection conn)
     {
         base.OnRoomServerConnect(conn);
-
-        //Vector3 spawnPos = FindObjectOfType<SpawnPositions>().GetSpawnPosition();
-
-        //var player = Instantiate(spawnPrefabs[0], spawnPos, Quaternion.identity);
-        //NetworkServer.Spawn(player, conn);
     }
 }
