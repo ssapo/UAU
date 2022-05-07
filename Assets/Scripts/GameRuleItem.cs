@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class GameRuleItem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField]
+	private GameObject inactiveObject;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	// Start is called before the first frame update
+	void Start()
+	{
+		if (!AmongUsRoomPlayer.MyRoomPlayer.isServer)
+		{
+			inactiveObject.SetActive(false);
+		}
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+
+	}
 }
